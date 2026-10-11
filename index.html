@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Сайт временно недоступен</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; --bg:#111111; --fg:#f1eee9; --muted:#99938f; --rose:#c99aa2; --line:rgba(241,238,233,.13); }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; }
+    body {
+      min-height:100svh; display:grid; place-items:center; overflow:hidden;
+      padding:28px; background:var(--bg); color:var(--fg);
+      font-family:'Manrope',sans-serif; -webkit-font-smoothing:antialiased;
+    }
+    body::before {
+      content:""; position:fixed; width:min(76vw,720px); aspect-ratio:1; border-radius:50%;
+      border:1px solid rgba(201,154,162,.11); pointer-events:none;
+      box-shadow:0 0 0 42px rgba(201,154,162,.025),0 0 0 100px rgba(201,154,162,.018),0 0 0 180px rgba(201,154,162,.012);
+    }
+    main { position:relative; width:min(680px,100%); text-align:center; padding:64px 24px; animation:appear .8s ease both; }
+    .mark { width:54px; height:54px; display:grid; place-items:center; margin:0 auto 32px; border:1px solid rgba(201,154,162,.65); border-radius:50%; color:var(--rose); font:500 25px/1 'Syne',sans-serif; transform:rotate(-8deg); }
+    .eyebrow { display:flex; justify-content:center; align-items:center; gap:10px; color:var(--muted); font-size:9px; letter-spacing:.23em; text-transform:uppercase; }
+    .dot { width:6px; height:6px; border-radius:50%; background:var(--rose); box-shadow:0 0 0 5px rgba(201,154,162,.09); }
+    h1 { margin:28px 0 20px; font:500 clamp(42px,8vw,78px)/.98 'Syne',sans-serif; letter-spacing:-.075em; }
+    h1 span { color:var(--rose); font-style:italic; font-weight:400; }
+    p { max-width:380px; margin:0 auto; color:rgba(241,238,233,.58); font-size:13px; line-height:1.9; }
+    .rule { width:48px; height:1px; margin:35px auto 0; background:var(--rose); opacity:.72; }
+    footer { position:fixed; bottom:24px; left:20px; right:20px; display:flex; justify-content:center; color:rgba(241,238,233,.32); font-size:8px; letter-spacing:.16em; text-align:center; text-transform:uppercase; }
+    @keyframes appear { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark" aria-hidden="true">А</div>
+    <div class="eyebrow"><span class="dot"></span> Технические работы</div>
+    <h1>Сайт временно<br><span>недоступен.</span></h1>
+    <p>Мы обновляем страницу и скоро вернёмся. Пожалуйста, загляните немного позже.</p>
+    <div class="rule" aria-hidden="true"></div>
+  </main>
+  <footer>Afina · PMU / Laser Studio · Камчатка</footer>
+</body>
+</html>
