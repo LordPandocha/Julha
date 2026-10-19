@@ -100,6 +100,8 @@ const storyCanvas = document.querySelector('.story-canvas');
 const storyResult = document.getElementById('story-result');
 const storyContinue = storyResult.querySelector('a');
 const replay = document.getElementById('story-replay');
+const storyStart = document.getElementById('story-start');
+const touchInput = window.matchMedia('(hover: none), (pointer: coarse)');
 function setStoryReady(ready) {
   storyResult.setAttribute('aria-hidden', String(!ready));
   storyContinue.tabIndex = ready ? 0 : -1;
@@ -109,6 +111,8 @@ let storyTimer = 0;
 let storyStarted = false;
 function startStory() {
   storyStarted = true;
+  storyStart.classList.add('has-started');
+  storyStart.querySelector('.story-start-copy').textContent = 'Повторить анимацию идеи';
   window.clearTimeout(storyTimer);
   experience.classList.remove('is-complete');
   setStoryReady(false);
@@ -123,21 +127,22 @@ function startStory() {
   else storyTimer = window.setTimeout(finish, 3150);
 }
 replay.addEventListener('click', startStory);
+storyStart.addEventListener('click', startStory);
 if ('IntersectionObserver' in window) {
   const storyObserver = new IntersectionObserver(entries => {
-    if (entries.some(entry => entry.isIntersecting) && !storyStarted) {
+    if (entries.some(entry => entry.isIntersecting) && !storyStarted && !touchInput.matches) {
       storyObserver.disconnect();
       startStory();
     }
   }, { threshold: 0.35 });
   storyObserver.observe(experience);
-} else startStory();
+} else if (!touchInput.matches) startStory();
 let transitioning = false;
 launch.addEventListener('click', () => {
   if (transitioning) return;
   if (reducedMotion.matches) {
     experience.scrollIntoView({ behavior: 'instant' });
-    if (!storyStarted) startStory();
+    if (!storyStarted && !touchInput.matches) startStory();
     return;
   }
   transitioning = true;
@@ -149,7 +154,7 @@ launch.addEventListener('click', () => {
   transition.classList.add('is-playing');
   window.setTimeout(() => {
     experience.scrollIntoView({ behavior: 'instant' });
-    if (!storyStarted) startStory();
+    if (!storyStarted && !touchInput.matches) startStory();
   }, 640);
   window.setTimeout(() => {
     transition.classList.remove('is-playing');

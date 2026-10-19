@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=motion-2">
-  <script src="app.js?v=motion-2" defer></script>
+  <link rel="stylesheet" href="styles.css?v=motion-3">
+  <script src="app.js?v=motion-3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">К содержанию</a>
@@ -32,7 +32,7 @@
         <h1 id="hero-title"><span class="title-line"><span>Сайты,</span></span><span class="title-line"><span>которые</span></span><span class="title-line accent-line"><span>невозможно <em>забыть.</em></span></span></h1>
         <div class="hero-bottom"><p>Я Иван, работаю как LordPandocha. Придумываю и собираю сайты, которые хочется рассмотреть — и в которых легко найти главное.</p><button class="launch-button magnetic" type="button" id="launch" aria-controls="experience"><span class="launch-icon" aria-hidden="true">↗</span><span class="launch-copy"><strong>Запустить идею</strong><small>Нажми — увидишь</small></span><span class="launch-ring" aria-hidden="true"></span></button></div>
       </div>
-      <div class="hero-footer"><span>Двигай курсором <span aria-hidden="true">↗</span></span><span>Листай вниз <span aria-hidden="true">↓</span></span></div>
+      <div class="hero-footer"><span><span class="pointer-hint">Двигай курсором</span><span class="touch-hint">Нажми на кнопку</span> <span aria-hidden="true">↗</span></span><span>Листай вниз <span aria-hidden="true">↓</span></span></div>
     </section>
 
     <section class="story-section" id="experience" aria-labelledby="story-title">
@@ -40,6 +40,12 @@
         <div class="story-heading"><span class="section-label">01 / ИДЕЯ В ДВИЖЕНИИ</span><button class="story-replay" type="button" id="story-replay" aria-label="Повторить анимацию идеи">Повторить ↺</button></div>
         <h2 id="story-title">Хороший сайт <em>начинается с мысли.</em><br>А потом оживает.</h2>
         <p class="story-intro">Выясняю, что важно человеку. Из этого рождаются структура, визуальный язык и движение.</p>
+        <div class="manifesto" aria-label="Мой подход к созданию сайтов">
+          <div class="manifesto-card manifesto-card-main"><span class="manifesto-index">01 / СНАЧАЛА СМЫСЛ</span><p>Сначала человек должен <em>понять.</em></p><span class="manifesto-mark" aria-hidden="true">✳</span></div>
+          <div class="manifesto-card manifesto-card-side"><span class="manifesto-index">02 / ПОТОМ ЭМОЦИЯ</span><p>Потом — захотеть <em>остаться.</em></p><span class="manifesto-arrow" aria-hidden="true">↗</span></div>
+          <div class="manifesto-caption">Не эффект ради эффекта. Дизайн, который ведёт к действию.</div>
+        </div>
+        <button class="story-start" type="button" id="story-start" aria-controls="story-result"><span class="story-start-icon" aria-hidden="true">✳</span><span class="story-start-copy">Коснись — и смотри, как идея оживает</span><span aria-hidden="true">↗</span></button>
         <div class="story-canvas" aria-label="Три этапа работы: идея, дизайн и запуск">
           <span class="story-grid" aria-hidden="true"></span>
           <svg class="story-svg" viewBox="0 0 1000 360" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
