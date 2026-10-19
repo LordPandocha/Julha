@@ -1,0 +1,3 @@
+const revealObserver=new IntersectionObserver((entries)=>entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('[data-reveal]').forEach((el)=>revealObserver.observe(el));
+document.querySelectorAll('.magnetic-button').forEach((button)=>{button.addEventListener('pointermove',(event)=>{if(matchMedia('(pointer: coarse)').matches)return;const r=button.getBoundingClientRect();const x=(event.clientX-r.left-r.width/2)*.18;const y=(event.clientY-r.top-r.height/2)*.18;button.style.transform=`translate(${x}px,${y}px) scale(1.04)`});button.addEventListener('pointerleave',()=>button.style.transform='')});
+
