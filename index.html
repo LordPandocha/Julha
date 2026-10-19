@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=motion-3">
-  <script src="app.js?v=motion-3" defer></script>
+  <link rel="stylesheet" href="styles.css?v=motion-4">
+  <script src="app.js?v=motion-4" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">К содержанию</a>
@@ -46,18 +46,16 @@
           <div class="manifesto-caption">Не эффект ради эффекта. Дизайн, который ведёт к действию.</div>
         </div>
         <button class="story-start" type="button" id="story-start" aria-controls="story-result"><span class="story-start-icon" aria-hidden="true">✳</span><span class="story-start-copy">Коснись — и смотри, как идея оживает</span><span aria-hidden="true">↗</span></button>
-        <div class="story-canvas" aria-label="Три этапа работы: идея, дизайн и запуск">
-          <span class="story-grid" aria-hidden="true"></span>
-          <svg class="story-svg" viewBox="0 0 1000 360" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <defs><linearGradient id="trace-gradient" x1="0" y1="0" x2="1000" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#b1ed59"/><stop offset=".5" stop-color="#f6ffe2"/><stop offset="1" stop-color="#c7ff4f"/></linearGradient></defs>
-            <path class="story-ghost" d="M70 282 C160 282 208 90 340 90 S505 298 650 252 S820 78 930 78"/>
-            <path class="story-trace" d="M70 282 C160 282 208 90 340 90 S505 298 650 252 S820 78 930 78"/>
-            <circle class="story-node node-one" cx="70" cy="282" r="11"/><circle class="story-node node-two" cx="340" cy="90" r="11"/><circle class="story-node node-three" cx="650" cy="252" r="11"/><circle class="story-node node-four" cx="930" cy="78" r="14"/>
-          </svg>
-          <div class="story-flash" aria-hidden="true">✳</div>
-          <span class="story-coordinate" aria-hidden="true">LP / 001 — MAKE IT MATTER</span>
+        <div class="story-canvas" aria-label="Путь от идеи до работающего сайта: смысл, образ, действие">
+          <div class="story-canvas-head"><span><i aria-hidden="true"></i> LP / DESIGN PROCESS</span><span>ОТ МЫСЛИ → К САЙТУ</span></div>
+          <div class="story-stages">
+            <div class="story-stage"><span class="stage-number">01</span><span class="stage-symbol" aria-hidden="true">◌</span><h3>Смысл<span>.</span></h3><p>Что человек должен понять с первого взгляда.</p></div>
+            <div class="story-stage"><span class="stage-number">02</span><span class="stage-symbol" aria-hidden="true">✳</span><h3>Образ<span>.</span></h3><p>Что он почувствует и запомнит.</p></div>
+            <div class="story-stage"><span class="stage-number">03</span><span class="stage-symbol" aria-hidden="true">↗</span><h3>Действие<span>.</span></h3><p>Куда захочет нажать дальше.</p></div>
+          </div>
+          <div class="story-timeline" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
+          <div class="story-canvas-foot"><span>ИДЕЯ СТАЛА САЙТОМ</span><span aria-hidden="true">✳</span></div>
         </div>
-        <div class="story-steps"><span><b>01 / СМЫСЛ</b>Что человек должен понять</span><span><b>02 / ОБРАЗ</b>Как он это почувствует</span><span><b>03 / ДЕЙСТВИЕ</b>Куда захочет нажать</span></div>
         <div class="story-result" id="story-result"><span>Теперь к делу — вот проекты, которые можно открыть и проверить.</span><a href="#work" class="story-continue">Смотреть сайты <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
