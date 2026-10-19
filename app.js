@@ -1,4 +1,7 @@
 document.documentElement.classList.add('js');
+if (navigator.connection?.saveData || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2)) {
+  document.documentElement.classList.add('lite-motion');
+}
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = window.matchMedia('(pointer: fine)');
@@ -17,7 +20,7 @@ if ('IntersectionObserver' in window) {
   revealItems.forEach(item => item.classList.add('is-visible'));
 }
 
-const decorative = document.querySelectorAll('.hero, .ticker, .about-section, .contact-section');
+const decorative = document.querySelectorAll('.hero, .ticker, .about-section, .contact-section, .story-section');
 if ('IntersectionObserver' in window) {
   const motionObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => entry.target.classList.toggle('is-offscreen', !entry.isIntersecting));
@@ -27,6 +30,17 @@ if ('IntersectionObserver' in window) {
 const updateVisibility = () => document.documentElement.classList.toggle('page-hidden', document.hidden);
 document.addEventListener('visibilitychange', updateVisibility);
 updateVisibility();
+
+const progress = document.querySelector('.reading-progress');
+let scrollFrame = 0;
+window.addEventListener('scroll', () => {
+  if (scrollFrame) return;
+  scrollFrame = requestAnimationFrame(() => {
+    const distance = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = `scaleX(${distance > 0 ? Math.min(1, window.scrollY / distance) : 0})`;
+    scrollFrame = 0;
+  });
+}, { passive: true });
 
 const cursor = document.querySelector('.cursor-light');
 const hero = document.querySelector('.hero');
@@ -81,12 +95,49 @@ document.querySelectorAll('.case-preview').forEach(card => {
 
 const launch = document.getElementById('launch');
 const transition = document.querySelector('.transition-screen');
-const work = document.getElementById('work');
+const experience = document.getElementById('experience');
+const storyCanvas = document.querySelector('.story-canvas');
+const storyResult = document.getElementById('story-result');
+const storyContinue = storyResult.querySelector('a');
+const replay = document.getElementById('story-replay');
+function setStoryReady(ready) {
+  storyResult.setAttribute('aria-hidden', String(!ready));
+  storyContinue.tabIndex = ready ? 0 : -1;
+}
+setStoryReady(false);
+let storyTimer = 0;
+let storyStarted = false;
+function startStory() {
+  storyStarted = true;
+  window.clearTimeout(storyTimer);
+  experience.classList.remove('is-complete');
+  setStoryReady(false);
+  storyCanvas.classList.remove('is-playing');
+  void storyCanvas.offsetWidth;
+  storyCanvas.classList.add('is-playing');
+  const finish = () => {
+    experience.classList.add('is-complete');
+    setStoryReady(true);
+  };
+  if (reducedMotion.matches) finish();
+  else storyTimer = window.setTimeout(finish, 3150);
+}
+replay.addEventListener('click', startStory);
+if ('IntersectionObserver' in window) {
+  const storyObserver = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting) && !storyStarted) {
+      storyObserver.disconnect();
+      startStory();
+    }
+  }, { threshold: 0.35 });
+  storyObserver.observe(experience);
+} else startStory();
 let transitioning = false;
 launch.addEventListener('click', () => {
   if (transitioning) return;
   if (reducedMotion.matches) {
-    work.scrollIntoView({ behavior: 'instant' });
+    experience.scrollIntoView({ behavior: 'instant' });
+    if (!storyStarted) startStory();
     return;
   }
   transitioning = true;
@@ -96,7 +147,10 @@ launch.addEventListener('click', () => {
   transition.classList.remove('is-playing');
   void transition.offsetWidth;
   transition.classList.add('is-playing');
-  window.setTimeout(() => work.scrollIntoView({ behavior: 'instant' }), 640);
+  window.setTimeout(() => {
+    experience.scrollIntoView({ behavior: 'instant' });
+    if (!storyStarted) startStory();
+  }, 640);
   window.setTimeout(() => {
     transition.classList.remove('is-playing');
     transitioning = false;

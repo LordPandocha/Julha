@@ -9,16 +9,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=motion-2">
+  <script src="app.js?v=motion-2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">К содержанию</a>
+  <div class="reading-progress" aria-hidden="true"></div>
   <div class="cursor-light" aria-hidden="true"></div>
   <div class="transition-screen" aria-hidden="true"><span>ПОЕХАЛИ<span class="transition-dot">.</span></span></div>
   <header class="site-header" id="top">
     <a class="brand" href="#top" aria-label="LordPandocha — наверх"><span class="brand-symbol">✳</span><span>lord<span class="brand-light">pandocha</span></span></a>
-    <nav aria-label="Навигация"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакты</a></nav>
+    <nav aria-label="Навигация"><a href="#experience">Идея</a><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Связаться</a></nav>
     <a class="header-contact" href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer"><span class="live-dot"></span> Написать в Telegram <span aria-hidden="true">↗</span></a>
   </header>
   <main id="main">
@@ -29,15 +30,36 @@
       <div class="hero-content">
         <div class="hero-topline"><span class="eyebrow"><span class="eyebrow-line"></span> Иван / LordPandocha</span><span class="eyebrow hero-edition">Портфолио · дизайн и разработка</span></div>
         <h1 id="hero-title"><span class="title-line"><span>Сайты,</span></span><span class="title-line"><span>которые</span></span><span class="title-line accent-line"><span>невозможно <em>забыть.</em></span></span></h1>
-        <div class="hero-bottom"><p>Проектирую и собираю сайты, в которых визуал ведёт к действию. Ниже — два реальных проекта и мой подход к работе.</p><button class="launch-button magnetic" type="button" id="launch"><span class="launch-icon" aria-hidden="true">↗</span><span class="launch-copy"><strong>Смотреть работы</strong><small>Нажми и погружайся</small></span><span class="launch-ring" aria-hidden="true"></span></button></div>
+        <div class="hero-bottom"><p>Я Иван, работаю как LordPandocha. Придумываю и собираю сайты, которые хочется рассмотреть — и в которых легко найти главное.</p><button class="launch-button magnetic" type="button" id="launch" aria-controls="experience"><span class="launch-icon" aria-hidden="true">↗</span><span class="launch-copy"><strong>Запустить идею</strong><small>Нажми — увидишь</small></span><span class="launch-ring" aria-hidden="true"></span></button></div>
       </div>
       <div class="hero-footer"><span>Двигай курсором <span aria-hidden="true">↗</span></span><span>Листай вниз <span aria-hidden="true">↓</span></span></div>
+    </section>
+
+    <section class="story-section" id="experience" aria-labelledby="story-title">
+      <div class="section story-inner">
+        <div class="story-heading"><span class="section-label">01 / ИДЕЯ В ДВИЖЕНИИ</span><button class="story-replay" type="button" id="story-replay" aria-label="Повторить анимацию идеи">Повторить ↺</button></div>
+        <h2 id="story-title">Хороший сайт <em>начинается с мысли.</em><br>А потом оживает.</h2>
+        <p class="story-intro">Выясняю, что важно человеку. Из этого рождаются структура, визуальный язык и движение.</p>
+        <div class="story-canvas" aria-label="Три этапа работы: идея, дизайн и запуск">
+          <span class="story-grid" aria-hidden="true"></span>
+          <svg class="story-svg" viewBox="0 0 1000 360" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs><linearGradient id="trace-gradient" x1="0" y1="0" x2="1000" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#b1ed59"/><stop offset=".5" stop-color="#f6ffe2"/><stop offset="1" stop-color="#c7ff4f"/></linearGradient></defs>
+            <path class="story-ghost" d="M70 282 C160 282 208 90 340 90 S505 298 650 252 S820 78 930 78"/>
+            <path class="story-trace" d="M70 282 C160 282 208 90 340 90 S505 298 650 252 S820 78 930 78"/>
+            <circle class="story-node node-one" cx="70" cy="282" r="11"/><circle class="story-node node-two" cx="340" cy="90" r="11"/><circle class="story-node node-three" cx="650" cy="252" r="11"/><circle class="story-node node-four" cx="930" cy="78" r="14"/>
+          </svg>
+          <div class="story-flash" aria-hidden="true">✳</div>
+          <span class="story-coordinate" aria-hidden="true">LP / 001 — MAKE IT MATTER</span>
+        </div>
+        <div class="story-steps"><span><b>01 / СМЫСЛ</b>Что человек должен понять</span><span><b>02 / ОБРАЗ</b>Как он это почувствует</span><span><b>03 / ДЕЙСТВИЕ</b>Куда захочет нажать</span></div>
+        <div class="story-result" id="story-result"><span>Теперь к делу — вот проекты, которые можно открыть и проверить.</span><a href="#work" class="story-continue">Смотреть сайты <span aria-hidden="true">↗</span></a></div>
+      </div>
     </section>
 
     <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ </span><span>ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ </span></div></div>
 
     <section class="section work-section" id="work" aria-labelledby="work-title">
-      <div class="section-heading reveal"><span class="section-label">01 / РАБОТЫ</span><div><h2 id="work-title">Не картинки.<br><em>Работающие сайты.</em></h2><p>Открой проекты и посмотри их вживую.</p></div></div>
+      <div class="section-heading reveal"><span class="section-label">02 / РАБОТЫ</span><div><h2 id="work-title">Не картинки.<br><em>Сайты, которые можно открыть.</em></h2><p>Два проекта, два разных характера. Посмотри сам.</p></div></div>
       <article class="case case-white reveal" aria-labelledby="white-title">
         <a class="case-preview" href="https://whiteglow.ru/" target="_blank" rel="noopener noreferrer" aria-label="Открыть сайт WhiteGlow">
           <div class="browser-frame"><div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="browser-address">whiteglow.ru</span><span>↗</span></div><div class="browser-screen white-screen"><img src="whiteglow-project.jpg" alt="Фотография Марии на сайте WhiteGlow" loading="lazy"><div class="screen-caption"><small>WHITEGLOW · ОБУЧЕНИЕ</small><strong>Опыт<br>в дело.</strong></div></div></div>
@@ -56,12 +78,14 @@
 
     <section class="about-section" id="about" aria-labelledby="about-title">
       <div class="about-orbit" aria-hidden="true"><span class="orbit-one"></span><span class="orbit-two"></span><span class="orbit-core">✳</span></div>
-      <div class="about-content reveal"><span class="section-label">02 / КТО ЗА САЙТОМ</span><h2 id="about-title">Привет, я <em>Иван.</em></h2><p>Работаю под именем LordPandocha. Делаю дизайн и собираю сайты: продумываю структуру, визуальный язык и то, как страница ведёт человека к нужному действию.</p><p>Мой подход проще всего оценить по готовым проектам выше — каждый можно открыть и проверить самому.</p><div class="about-links"><a href="https://www.instagram.com/lordpandocha/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a><a href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer">Telegram <span aria-hidden="true">↗</span></a></div></div>
+      <div class="about-content reveal"><span class="section-label">03 / ЧЕЛОВЕК ЗА САЙТОМ</span><h2 id="about-title">Привет, я <em>Иван.</em></h2><p>Под именем LordPandocha я делаю дизайн и собираю сайты. Мне важно, чтобы сильный первый экран не скрывал слабую логику: человек должен быстро понять, куда попал и что делать дальше.</p><p>Здесь нет нарисованных кейсов — выше можно открыть оба проекта. А если хочешь обсудить свой, напиши мне напрямую.</p><div class="about-links"><a href="https://www.instagram.com/lordpandocha/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a><a href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer">Telegram <span aria-hidden="true">↗</span></a></div></div>
     </section>
 
-    <section class="process-section section" aria-labelledby="process-title"><div class="section-heading reveal"><span class="section-label">03 / ПОДХОД</span><div><h2 id="process-title">Сначала смысл.<br><em>Потом вау.</em></h2></div></div><div class="process-grid"><div class="process-item reveal"><span>01</span><h3>Разобраться</h3><p>Что нужно показать клиенту и какое действие от него ждём.</p></div><div class="process-item reveal"><span>02</span><h3>Собрать образ</h3><p>Структура, типографика, цвета, фотографии и движение складываются в один характер.</p></div><div class="process-item reveal"><span>03</span><h3>Запустить</h3><p>Адаптивная сборка, проверка взаимодействий и понятный путь к контакту.</p></div></div></section>
+    <section class="why-section section" aria-labelledby="why-title"><div class="section-heading reveal"><span class="section-label">04 / ПОЧЕМУ СО МНОЙ</span><div><h2 id="why-title">Не просто эффект.<br><em>Эффект по делу.</em></h2><p>Хочу, чтобы сайт впечатлял в первую секунду — и оставался понятным после неё.</p></div></div><div class="why-grid"><article class="why-card reveal"><span>✳ / 01</span><h3>Один разговор</h3><p>Ты общаешься с человеком, который думает над страницей и собирает её. Без потери смысла между «придумали» и «сделали».</p></article><article class="why-card reveal"><span>↗ / 02</span><h3>Можно проверить</h3><p>Я показываю работающие сайты, а не обещания. Открой WhiteGlow и ChistoDoma, посмотри детали и реши сам.</p></article><article class="why-card reveal"><span>◉ / 03</span><h3>Движение с задачей</h3><p>Анимация помогает заметить главное, понять переход и почувствовать характер проекта. Она не должна мешать читать или нажимать.</p></article></div></section>
 
-    <section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="contact-glow" aria-hidden="true"></div><div class="section reveal"><span class="section-label">04 / СВЯЗЬ</span><h2 id="contact-title">Есть задача?<br><em>Давай сделаем красиво.</em></h2><p>Напиши, что за проект и какая цель у сайта. Обсудим идею напрямую.</p><div class="contact-actions"><a class="contact-primary magnetic" href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer">Написать в Telegram <span aria-hidden="true">↗</span></a><a class="contact-secondary" href="https://www.instagram.com/lordpandocha/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a></div></div></section>
+    <section class="process-section section" aria-labelledby="process-title"><div class="section-heading reveal"><span class="section-label">05 / КАК РАБОТАЮ</span><div><h2 id="process-title">Сначала смысл.<br><em>Потом вау.</em></h2></div></div><div class="process-grid"><div class="process-item reveal"><span>01</span><h3>Разобраться</h3><p>Что человеку важно узнать и какое действие должно быть простым.</p></div><div class="process-item reveal"><span>02</span><h3>Собрать образ</h3><p>Соединить структуру, типографику, фотографии и движение в цельный сайт.</p></div><div class="process-item reveal"><span>03</span><h3>Проверить и запустить</h3><p>Пройти путь посетителя на разных экранах и довести детали до конца.</p></div></div></section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="contact-glow" aria-hidden="true"></div><div class="section reveal"><span class="section-label">06 / СВЯЗЬ</span><h2 id="contact-title">Есть задача?<br><em>Давай сделаем заметно.</em></h2><p>Расскажи в двух словах, для кого сайт и что он должен помочь сделать. Отвечу лично.</p><div class="contact-actions"><a class="contact-primary magnetic" href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer">Написать в Telegram <span aria-hidden="true">↗</span></a><a class="contact-secondary" href="https://www.instagram.com/lordpandocha/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a></div></div></section>
   </main>
   <footer class="site-footer"><span>© LordPandocha · 2026</span><a href="#top">Наверх ↑</a><span>Сделано с вниманием к деталям ✳</span></footer>
 </body>
