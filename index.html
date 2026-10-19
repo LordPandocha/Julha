@@ -1,49 +1,8 @@
 <!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111111">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Сайт временно недоступен</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { color-scheme: dark; --bg:#111111; --fg:#f1eee9; --muted:#99938f; --rose:#c99aa2; --line:rgba(241,238,233,.13); }
-    * { box-sizing:border-box; }
-    html,body { margin:0; min-height:100%; }
-    body {
-      min-height:100svh; display:grid; place-items:center; overflow:hidden;
-      padding:28px; background:var(--bg); color:var(--fg);
-      font-family:'Manrope',sans-serif; -webkit-font-smoothing:antialiased;
-    }
-    body::before {
-      content:""; position:fixed; width:min(76vw,720px); aspect-ratio:1; border-radius:50%;
-      border:1px solid rgba(201,154,162,.11); pointer-events:none;
-      box-shadow:0 0 0 42px rgba(201,154,162,.025),0 0 0 100px rgba(201,154,162,.018),0 0 0 180px rgba(201,154,162,.012);
-    }
-    main { position:relative; width:min(680px,100%); text-align:center; padding:64px 24px; animation:appear .8s ease both; }
-    .mark { width:54px; height:54px; display:grid; place-items:center; margin:0 auto 32px; border:1px solid rgba(201,154,162,.65); border-radius:50%; color:var(--rose); font:500 25px/1 'Syne',sans-serif; transform:rotate(-8deg); }
-    .eyebrow { display:flex; justify-content:center; align-items:center; gap:10px; color:var(--muted); font-size:9px; letter-spacing:.23em; text-transform:uppercase; }
-    .dot { width:6px; height:6px; border-radius:50%; background:var(--rose); box-shadow:0 0 0 5px rgba(201,154,162,.09); }
-    h1 { margin:28px 0 20px; font:500 clamp(42px,8vw,78px)/.98 'Syne',sans-serif; letter-spacing:-.075em; }
-    h1 span { color:var(--rose); font-style:italic; font-weight:400; }
-    p { max-width:380px; margin:0 auto; color:rgba(241,238,233,.58); font-size:13px; line-height:1.9; }
-    .rule { width:48px; height:1px; margin:35px auto 0; background:var(--rose); opacity:.72; }
-    footer { position:fixed; bottom:24px; left:20px; right:20px; display:flex; justify-content:center; color:rgba(241,238,233,.32); font-size:8px; letter-spacing:.16em; text-align:center; text-transform:uppercase; }
-    @keyframes appear { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
-  </style>
-</head>
-<body>
-  <main>
-    <div class="mark" aria-hidden="true">А</div>
-    <div class="eyebrow"><span class="dot"></span> Технические работы</div>
-    <h1>Сайт временно<br><span>недоступен.</span></h1>
-    <p>Мы обновляем страницу и скоро вернёмся. Пожалуйста, загляните немного позже.</p>
-    <div class="rule" aria-hidden="true"></div>
-  </main>
-  <footer>Afina · PMU / Laser Studio · Камчатка</footer>
-</body>
-</html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080808"><meta name="description" content="LordPandocha — сайты, которые ощущаются как бренд."><title>LordPandocha — сайты с характером</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head>
+<body><div class="noise" aria-hidden="true"></div><header class="site-header"><a class="logo" href="#top"><span class="logo-dot"></span>LordPandocha</a><nav><a href="#work">Работы</a><a href="#approach">Подход</a><a href="#contact">Контакт</a></nav><a class="header-link" href="mailto:hello@lordpandocha.ru">Написать <span>↗</span></a></header>
+<main id="top"><section class="hero" data-reveal><div class="hero-orb orb-a"></div><div class="hero-orb orb-b"></div><p class="eyebrow"><span class="status-dot"></span> Дизайн &amp; разработка · 2026</p><h1>Сайты, которые<br><i>остаются</i> в голове.</h1><div class="hero-bottom"><p>Собираю выразительные цифровые пространства для брендов, которым мало быть просто «аккуратными».</p><a class="magnetic-button" href="#work"><span>Смотреть проекты</span><b>↓</b></a></div><div class="scroll-mark">SCROLL TO EXPLORE <span>↘</span></div></section>
+<section class="intro wrap" data-reveal><p class="section-index">01 / Что делаю</p><div><h2>От первого импульса<br>до <em>живого сайта.</em></h2><p class="lead">Стратегия, визуальный язык, код и детали — всё в одной связной системе. Не шаблон. Не «как у всех». Сайт, который работает на ощущение и действие.</p></div></section>
+<section id="work" class="work wrap"><div class="section-head" data-reveal><p class="section-index">02 / Избранные работы</p><p class="muted">02 проекта · 2024—2026</p></div><article class="project project-whiteglow" data-reveal><div class="project-visual"><div class="visual-glow"></div><img src="https://raw.githubusercontent.com/LordPandocha/WhiteGlow/main/instagram/maria-business.jpg" alt="WhiteGlow — сервис и обучение клинингу" loading="lazy"><span class="project-number">01</span><span class="visual-label">WHITE GLOVE / EDUCATION</span></div><div class="project-info"><p class="project-type">Образование · сервис</p><h3>WhiteGlow</h3><p>Мягкий, уверенный сайт для обучения профессиональному клинингу. Сложную услугу превратили в ясный путь: доверие → программа → заявка.</p><div class="project-tags"><span>Art direction</span><span>UX/UI</span><span>Development</span></div><a class="text-arrow" href="https://www.instagram.com/cleaning_white_glove/" target="_blank" rel="noopener">Смотреть бренд <span>↗</span></a></div></article><article class="project project-chisti" data-reveal><div class="project-visual"><div class="grid-shine"></div><div class="chisti-lockup"><span>CHISTI</span><strong>DOMA</strong><small>чистота, которую видно</small></div><span class="project-number">02</span><span class="visual-label">CHISTIDOMA / HOME CARE</span></div><div class="project-info"><p class="project-type">Сервис · lifestyle</p><h3>ChistiDoma</h3><p>Понятный и тёплый digital-образ для сервиса, где результат должен быть заметен с первого экрана. Акцент — на доверии и лёгком пути до заявки.</p><div class="project-tags"><span>Brand system</span><span>Web design</span><span>Motion</span></div><a class="text-arrow" href="#contact">Обсудить похожий проект <span>↗</span></a></div></article></section>
+<section id="approach" class="approach wrap" data-reveal><p class="section-index">03 / Как работаем</p><div class="approach-grid"><h2>Красиво — это<br>только <em>начало.</em></h2><div class="steps"><div class="step"><span>01</span><h3>Сначала — смысл</h3><p>Разбираемся, кого нужно зацепить, что человек должен понять и какое действие совершить.</p></div><div class="step"><span>02</span><h3>Потом — характер</h3><p>Находим визуальный код: цвет, типографика, движение и ритм, которые выглядят именно вашими.</p></div><div class="step"><span>03</span><h3>И только потом — код</h3><p>Собираю быстрый, адаптивный сайт с живыми состояниями и уважением к reduced motion.</p></div></div></div></section><section id="contact" class="contact wrap" data-reveal><p class="section-index">04 / Есть идея?</p><h2>Давайте сделаем<br><em>что-то заметное.</em></h2><a class="contact-button magnetic-button" href="mailto:hello@lordpandocha.ru"><span>hello@lordpandocha.ru</span><b>↗</b></a></section></main><footer class="site-footer wrap"><span>© 2026 LordPandocha</span><span>Design &amp; development from Yekaterinburg</span><a href="#top">Наверх ↑</a></footer><script src="app.js"></script></body></html>
+
