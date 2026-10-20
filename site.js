@@ -61,69 +61,75 @@ try {
   }
 } catch (_) { /* navigation still works without storage */ }
 
-// The route starts by choice, then pauses when it leaves the viewport.
+// The chosen scene is driven by scroll: particles assemble a site, then reveal it.
 const cinema = document.getElementById('process-cinema');
-const startButton = document.getElementById('process-play');
-const replay = document.getElementById('process-replay');
-if (cinema && startButton && replay) {
-  const path = document.getElementById('cinema-line');
-  const plane = document.getElementById('cinema-plane');
+const processScroll = document.getElementById('process-scroll');
+const particleCanvas = document.getElementById('build-particles');
+if (cinema && processScroll && particleCanvas) {
+  const context = particleCanvas.getContext('2d');
   const scenes = [...cinema.querySelectorAll('.cinema-scene')];
   const counter = document.getElementById('cinema-counter');
   const progressBar = cinema.querySelector('.cinema-progress i');
-  const length = path.getTotalLength();
-  let playing = false, visible = true, frame = 0, elapsed = 0, last = 0, activeScene = -1;
-  path.style.strokeDasharray = String(length);
-  function render(progress) {
-    const at = Math.max(0, Math.min(1, progress));
-    path.style.strokeDashoffset = String(length * (1 - at));
-    const point = path.getPointAtLength(length * at);
-    const near = path.getPointAtLength(Math.min(length, length * at + 5));
-    const angle = Math.atan2(near.y - point.y, near.x - point.x) * 180 / Math.PI;
-    plane.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle}) scale(${touchMode.matches ? 2.15 : 1.6})`);
-    progressBar.style.transform = `scaleX(${at})`;
-    const stage = at >= 1 ? 2 : at < .34 ? 0 : at < .69 ? 1 : 2;
+  const clamp = value => Math.max(0, Math.min(1, value));
+  const smooth = value => { const t = clamp(value); return t * t * (3 - 2 * t); };
+  const random = seed => { const x = Math.sin(seed * 127.1 + 78.233) * 43758.5453; return x - Math.floor(x); };
+  let width = 1, height = 1, pending = 0, activeScene = -1;
+  function resizeParticles() {
+    const bounds = particleCanvas.getBoundingClientRect();
+    width = Math.max(1, bounds.width); height = Math.max(1, bounds.height);
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    particleCanvas.width = Math.round(width * ratio);
+    particleCanvas.height = Math.round(height * ratio);
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    updateScene();
+  }
+  function drawParticles(progress) {
+    context.clearRect(0, 0, width, height);
+    const assembly = smooth((progress - .05) / .42);
+    const fade = 1 - smooth((progress - .7) / .26);
+    context.globalAlpha = Math.max(.06, fade);
+    for (let index = 0; index < 290; index++) {
+      const group = index % 5;
+      const targetX = group === 0 ? width * (.1 + random(index + 3) * .32) : group === 1 ? width * (.1 + random(index + 3) * .39) : group === 2 ? width * (.1 + random(index + 3) * .22) : width * (.59 + random(index + 3) * .31);
+      const targetY = group === 0 ? height * (.23 + random(index + 7) * .06) : group === 1 ? height * (.39 + random(index + 7) * .08) : group === 2 ? height * (.69 + random(index + 7) * .055) : height * (.2 + random(index + 7) * .54);
+      const scatterX = width * (.06 + random(index + 31) * .88);
+      const scatterY = height * (.08 + random(index + 67) * .84);
+      const drift = (1 - assembly) * Math.sin(progress * 9 + index) * 7;
+      const x = scatterX + (targetX - scatterX) * assembly + drift;
+      const y = scatterY + (targetY - scatterY) * assembly;
+      const size = (index % 9 === 0 ? 3.5 : 1.8) + assembly * .4;
+      context.fillStyle = index % 6 === 0 ? '#f1ffe0' : '#c7ff4f';
+      context.fillRect(x, y, size, size);
+    }
+    context.globalAlpha = 1;
+  }
+  function updateScene() {
+    if (document.hidden) return;
+    const rect = processScroll.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    const travel = Math.max(1, rect.height - window.innerHeight);
+    const progress = lowMotion() ? 1 : clamp(-rect.top / travel);
+    const stage = progress < .32 ? 0 : progress < .68 ? 1 : 2;
+    cinema.style.setProperty('--build-progress', progress.toFixed(3));
+    cinema.style.setProperty('--site-opacity', smooth((progress - .57) / .33).toFixed(3));
+    cinema.style.setProperty('--particle-opacity', (1 - smooth((progress - .76) / .22)).toFixed(3));
+    progressBar.style.transform = `scaleX(${progress})`;
     if (stage !== activeScene) {
       activeScene = stage;
+      cinema.dataset.stage = String(stage);
       scenes.forEach((scene, index) => scene.classList.toggle('is-current', index === stage));
       counter.textContent = `0${stage + 1} — 03`;
     }
-    cinema.classList.toggle('is-finished', at >= 1);
+    drawParticles(progress);
   }
-  function tick(now) {
-    if (!playing || !visible || document.hidden) { frame = 0; last = 0; return; }
-    if (last) elapsed += Math.min(now - last, 50);
-    last = now;
-    const duration = touchMode.matches ? 10400 : 9800;
-    const t = Math.min(1, elapsed / duration);
-    render(t * t * (3 - 2 * t));
-    if (t < 1) frame = requestAnimationFrame(tick);
-    else { playing = false; frame = 0; replay.hidden = false; }
+  function scheduleUpdate() {
+    if (pending) return;
+    pending = requestAnimationFrame(() => { pending = 0; updateScene(); });
   }
-  function play() {
-    cancelAnimationFrame(frame);
-    elapsed = 0; last = 0; activeScene = -1;
-    cinema.classList.add('has-started');
-    replay.hidden = true;
-    if (lowMotion()) { playing = false; render(1); replay.hidden = false; return; }
-    playing = true;
-    render(0);
-    if (visible && !document.hidden) frame = requestAnimationFrame(tick);
-  }
-  startButton.addEventListener('click', play);
-  replay.addEventListener('click', play);
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      visible = entries[0].isIntersecting;
-      if (visible && playing && !frame && !document.hidden) frame = requestAnimationFrame(tick);
-      else if (!visible && frame) { cancelAnimationFrame(frame); frame = 0; last = 0; }
-    }, { threshold: 0.08 });
-    observer.observe(cinema);
-  }
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && frame) { cancelAnimationFrame(frame); frame = 0; last = 0; }
-    else if (!document.hidden && visible && playing && !frame) frame = requestAnimationFrame(tick);
-  });
+  window.addEventListener('scroll', scheduleUpdate, { passive: true });
+  window.addEventListener('resize', resizeParticles);
+  document.addEventListener('visibilitychange', scheduleUpdate);
+  resizeParticles();
 }
 
 // Touch gets scroll-triggered feedback where desktop uses hover.
