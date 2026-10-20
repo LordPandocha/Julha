@@ -1,96 +1,26 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080b0a">
-  <meta name="description" content="Иван — LordPandocha. Дизайн и разработка сайтов с характером. Реальные проекты: WhiteGlow и ChistoDoma.">
-  <title>LordPandocha — сайты с характером</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#080b0a">
+  <meta name="description" content="Портфолио Ивана LordPandocha: дизайн и разработка сайтов. Работы WhiteGlow и ChistoDoma.">
+  <title>LordPandocha — портфолио Ивана</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=motion-4">
-  <script src="app.js?v=motion-4" defer></script>
+  <link rel="stylesheet" href="site.css?v=5"><script src="site.js?v=5" defer></script>
 </head>
-<body>
+<body class="page-home">
   <a class="skip-link" href="#main">К содержанию</a>
-  <div class="reading-progress" aria-hidden="true"></div>
-  <div class="cursor-light" aria-hidden="true"></div>
-  <div class="transition-screen" aria-hidden="true"><span>ПОЕХАЛИ<span class="transition-dot">.</span></span></div>
-  <header class="site-header" id="top">
-    <a class="brand" href="#top" aria-label="LordPandocha — наверх"><span class="brand-symbol">✳</span><span>lord<span class="brand-light">pandocha</span></span></a>
-    <nav aria-label="Навигация"><a href="#experience">Идея</a><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Связаться</a></nav>
-    <a class="header-contact" href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer"><span class="live-dot"></span> Написать в Telegram <span aria-hidden="true">↗</span></a>
-  </header>
+  <header class="site-header"><a class="brand" href="index.html" aria-label="LordPandocha — главная"><span class="brand-star">✳</span>lord<span>pandocha</span></a><nav aria-label="Основная навигация"><a href="works.html">Работы</a><a href="approach.html">Подход</a><a href="about.html">Обо мне</a><a href="contact.html">Контакты</a></nav><a class="header-cta" href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer">Написать ↗</a></header>
   <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-grid" aria-hidden="true"></div>
-      <div class="hero-art-wrap" aria-hidden="true"><img class="hero-art" src="hero-art.png" alt="" fetchpriority="high"></div>
-      <div class="hero-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="hero-content">
-        <div class="hero-topline"><span class="eyebrow"><span class="eyebrow-line"></span> Иван / LordPandocha</span><span class="eyebrow hero-edition">Портфолио · дизайн и разработка</span></div>
-        <h1 id="hero-title"><span class="title-line"><span>Сайты,</span></span><span class="title-line"><span>которые</span></span><span class="title-line accent-line"><span>невозможно <em>забыть.</em></span></span></h1>
-        <div class="hero-bottom"><p>Я Иван, работаю как LordPandocha. Придумываю и собираю сайты, которые хочется рассмотреть — и в которых легко найти главное.</p><button class="launch-button magnetic" type="button" id="launch" aria-controls="experience"><span class="launch-icon" aria-hidden="true">↗</span><span class="launch-copy"><strong>Запустить идею</strong><small>Нажми — увидишь</small></span><span class="launch-ring" aria-hidden="true"></span></button></div>
-      </div>
-      <div class="hero-footer"><span><span class="pointer-hint">Двигай курсором</span><span class="touch-hint">Нажми на кнопку</span> <span aria-hidden="true">↗</span></span><span>Листай вниз <span aria-hidden="true">↓</span></span></div>
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-grid" aria-hidden="true"></div><div class="home-art" aria-hidden="true"><img src="hero-art.png" alt="" fetchpriority="high"></div>
+      <div class="home-topline"><span><i></i> Иван / LordPandocha</span><span>Дизайн + разработка сайтов</span></div>
+      <div class="home-center"><span class="overline">Добро пожаловать в моё портфолио</span><h1 id="home-title">Моё<br><em>портфолио.</em></h1><p>Я Иван. Придумываю и собираю сайты, которые хочется рассмотреть — и в которых легко найти главное.</p><a class="go-button" id="go-button" href="works.html" aria-label="Поехали — открыть мои работы"><span class="go-label"><strong>Поехали</strong><small>Открыть мои работы</small></span><span class="go-plane" aria-hidden="true">↗</span></a></div>
+      <div class="home-bottomline"><span>Реальные сайты, которые можно открыть</span><span>01 / 04 — листай меню наверху</span></div>
     </section>
-
-    <section class="story-section" id="experience" aria-labelledby="story-title">
-      <div class="section story-inner">
-        <div class="story-heading"><span class="section-label">01 / ИДЕЯ В ДВИЖЕНИИ</span><button class="story-replay" type="button" id="story-replay" aria-label="Повторить анимацию идеи">Повторить ↺</button></div>
-        <h2 id="story-title">Хороший сайт <em>начинается с мысли.</em><br>А потом оживает.</h2>
-        <p class="story-intro">Выясняю, что важно человеку. Из этого рождаются структура, визуальный язык и движение.</p>
-        <div class="manifesto" aria-label="Мой подход к созданию сайтов">
-          <div class="manifesto-card manifesto-card-main"><span class="manifesto-index">01 / СНАЧАЛА СМЫСЛ</span><p>Сначала человек должен <em>понять.</em></p><span class="manifesto-mark" aria-hidden="true">✳</span></div>
-          <div class="manifesto-card manifesto-card-side"><span class="manifesto-index">02 / ПОТОМ ЭМОЦИЯ</span><p>Потом — захотеть <em>остаться.</em></p><span class="manifesto-arrow" aria-hidden="true">↗</span></div>
-          <div class="manifesto-caption">Не эффект ради эффекта. Дизайн, который ведёт к действию.</div>
-        </div>
-        <button class="story-start" type="button" id="story-start" aria-controls="story-result"><span class="story-start-icon" aria-hidden="true">✳</span><span class="story-start-copy">Коснись — и смотри, как идея оживает</span><span aria-hidden="true">↗</span></button>
-        <div class="story-canvas" aria-label="Путь от идеи до работающего сайта: смысл, образ, действие">
-          <div class="story-canvas-head"><span><i aria-hidden="true"></i> LP / DESIGN PROCESS</span><span>ОТ МЫСЛИ → К САЙТУ</span></div>
-          <div class="story-stages">
-            <div class="story-stage"><span class="stage-number">01</span><span class="stage-symbol" aria-hidden="true">◌</span><h3>Смысл<span>.</span></h3><p>Что человек должен понять с первого взгляда.</p></div>
-            <div class="story-stage"><span class="stage-number">02</span><span class="stage-symbol" aria-hidden="true">✳</span><h3>Образ<span>.</span></h3><p>Что он почувствует и запомнит.</p></div>
-            <div class="story-stage"><span class="stage-number">03</span><span class="stage-symbol" aria-hidden="true">↗</span><h3>Действие<span>.</span></h3><p>Куда захочет нажать дальше.</p></div>
-          </div>
-          <div class="story-timeline" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
-          <div class="story-canvas-foot"><span>ИДЕЯ СТАЛА САЙТОМ</span><span aria-hidden="true">✳</span></div>
-        </div>
-        <div class="story-result" id="story-result"><span>Теперь к делу — вот проекты, которые можно открыть и проверить.</span><a href="#work" class="story-continue">Смотреть сайты <span aria-hidden="true">↗</span></a></div>
-      </div>
-    </section>
-
-    <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ </span><span>ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ ИДЕЯ ✳ ДИЗАЙН ✳ КОД ✳ ДВИЖЕНИЕ ✳ </span></div></div>
-
-    <section class="section work-section" id="work" aria-labelledby="work-title">
-      <div class="section-heading reveal"><span class="section-label">02 / РАБОТЫ</span><div><h2 id="work-title">Не картинки.<br><em>Сайты, которые можно открыть.</em></h2><p>Два проекта, два разных характера. Посмотри сам.</p></div></div>
-      <article class="case case-white reveal" aria-labelledby="white-title">
-        <a class="case-preview" href="https://whiteglow.ru/" target="_blank" rel="noopener noreferrer" aria-label="Открыть сайт WhiteGlow">
-          <div class="browser-frame"><div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="browser-address">whiteglow.ru</span><span>↗</span></div><div class="browser-screen white-screen"><img src="whiteglow-project.jpg" alt="Фотография Марии на сайте WhiteGlow" loading="lazy"><div class="screen-caption"><small>WHITEGLOW · ОБУЧЕНИЕ</small><strong>Опыт<br>в дело.</strong></div></div></div>
-          <span class="case-hover-arrow" aria-hidden="true">↗</span>
-        </a>
-        <div class="case-details"><span class="case-index">01 — ОБУЧЕНИЕ / КЛИНИНГ</span><h3 id="white-title">WhiteGlow<span class="case-star" aria-hidden="true">✳</span></h3><p>Сайт курса Марии Манукян о профессиональном клининге: знакомство с экспертом, программа, форматы обучения и отзывы учеников.</p><div class="case-actions"><a class="case-link" href="https://whiteglow.ru/" target="_blank" rel="noopener noreferrer">Открыть сайт <span aria-hidden="true">↗</span></a><a class="case-source" href="https://github.com/LordPandocha/WhiteGlow" target="_blank" rel="noopener noreferrer">Исходники ↗</a><span class="case-domain">whiteglow.ru</span></div></div>
-      </article>
-      <article class="case case-chisto reveal" aria-labelledby="chisto-title">
-        <a class="case-preview" href="https://chistodoma86.ru/" target="_blank" rel="noopener noreferrer" aria-label="Открыть сайт ChistoDoma">
-          <div class="browser-frame"><div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="browser-address">chistodoma86.ru</span><span>↗</span></div><div class="browser-screen chisto-screen"><img src="chistodoma-project.webp" alt="Главная фотография сайта ChistoDoma" loading="lazy"><div class="screen-caption"><small>CHISTODOMA · ХИМЧИСТКА</small><strong>Чистота<br>в деталях.</strong></div></div></div>
-          <span class="case-hover-arrow" aria-hidden="true">↗</span>
-        </a>
-        <div class="case-details"><span class="case-index">02 — УСЛУГИ / ДОМ</span><h3 id="chisto-title">ChistoDoma<span class="case-star" aria-hidden="true">✳</span></h3><p>Сайт сервиса чистки мебели в Нефтеюганске: понятные услуги, цены, фотографии работ и короткий путь к заявке.</p><div class="case-actions"><a class="case-link" href="https://chistodoma86.ru/" target="_blank" rel="noopener noreferrer">Открыть сайт <span aria-hidden="true">↗</span></a><a class="case-source" href="https://github.com/LordPandocha/ChistoDoma" target="_blank" rel="noopener noreferrer">Исходники ↗</a><span class="case-domain">chistodoma86.ru</span></div></div>
-      </article>
-    </section>
-
-    <section class="about-section" id="about" aria-labelledby="about-title">
-      <div class="about-orbit" aria-hidden="true"><span class="orbit-one"></span><span class="orbit-two"></span><span class="orbit-core">✳</span></div>
-      <div class="about-content reveal"><span class="section-label">03 / ЧЕЛОВЕК ЗА САЙТОМ</span><h2 id="about-title">Привет, я <em>Иван.</em></h2><p>Под именем LordPandocha я делаю дизайн и собираю сайты. Мне важно, чтобы сильный первый экран не скрывал слабую логику: человек должен быстро понять, куда попал и что делать дальше.</p><p>Здесь нет нарисованных кейсов — выше можно открыть оба проекта. А если хочешь обсудить свой, напиши мне напрямую.</p><div class="about-links"><a href="https://www.instagram.com/lordpandocha/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a><a href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer">Telegram <span aria-hidden="true">↗</span></a></div></div>
-    </section>
-
-    <section class="why-section section" aria-labelledby="why-title"><div class="section-heading reveal"><span class="section-label">04 / ПОЧЕМУ СО МНОЙ</span><div><h2 id="why-title">Не просто эффект.<br><em>Эффект по делу.</em></h2><p>Хочу, чтобы сайт впечатлял в первую секунду — и оставался понятным после неё.</p></div></div><div class="why-grid"><article class="why-card reveal"><span>✳ / 01</span><h3>Один разговор</h3><p>Ты общаешься с человеком, который думает над страницей и собирает её. Без потери смысла между «придумали» и «сделали».</p></article><article class="why-card reveal"><span>↗ / 02</span><h3>Можно проверить</h3><p>Я показываю работающие сайты, а не обещания. Открой WhiteGlow и ChistoDoma, посмотри детали и реши сам.</p></article><article class="why-card reveal"><span>◉ / 03</span><h3>Движение с задачей</h3><p>Анимация помогает заметить главное, понять переход и почувствовать характер проекта. Она не должна мешать читать или нажимать.</p></article></div></section>
-
-    <section class="process-section section" aria-labelledby="process-title"><div class="section-heading reveal"><span class="section-label">05 / КАК РАБОТАЮ</span><div><h2 id="process-title">Сначала смысл.<br><em>Потом вау.</em></h2></div></div><div class="process-grid"><div class="process-item reveal"><span>01</span><h3>Разобраться</h3><p>Что человеку важно узнать и какое действие должно быть простым.</p></div><div class="process-item reveal"><span>02</span><h3>Собрать образ</h3><p>Соединить структуру, типографику, фотографии и движение в цельный сайт.</p></div><div class="process-item reveal"><span>03</span><h3>Проверить и запустить</h3><p>Пройти путь посетителя на разных экранах и довести детали до конца.</p></div></div></section>
-
-    <section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="contact-glow" aria-hidden="true"></div><div class="section reveal"><span class="section-label">06 / СВЯЗЬ</span><h2 id="contact-title">Есть задача?<br><em>Давай сделаем заметно.</em></h2><p>Расскажи в двух словах, для кого сайт и что он должен помочь сделать. Отвечу лично.</p><div class="contact-actions"><a class="contact-primary magnetic" href="https://t.me/LordPandocha" target="_blank" rel="noopener noreferrer">Написать в Telegram <span aria-hidden="true">↗</span></a><a class="contact-secondary" href="https://www.instagram.com/lordpandocha/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a></div></div></section>
+    <section class="home-preview" aria-label="Что внутри портфолио"><a href="works.html"><span>01 / РАБОТЫ</span><strong>Смотри сайты,<br>не обещания.</strong><b aria-hidden="true">↗</b></a><a href="approach.html"><span>02 / ПОДХОД</span><strong>Сначала смысл.<br>Потом вау.</strong><b aria-hidden="true">↗</b></a></section>
   </main>
-  <footer class="site-footer"><span>© LordPandocha · 2026</span><a href="#top">Наверх ↑</a><span>Сделано с вниманием к деталям ✳</span></footer>
+  <div class="flight" id="flight" aria-hidden="true"><div class="flight-lines"></div><span class="flight-word">ПОЕХАЛИ<span>.</span></span><svg class="flight-plane" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 82 145 17 104 145 79 96 17 82Z" fill="#c7ff4f" stroke="#f3ffe1" stroke-width="4" stroke-linejoin="round"/><path d="m79 96 66-79-41 128-25-49Z" fill="#90cb2a"/><path d="m17 82 128-65-66 79-62-14Z" fill="#e3ffab"/><path d="m79 96-22 34 4-40" fill="#6ea81c"/></svg><span class="flight-trail"></span></div>
+  <footer class="site-footer"><span>© LordPandocha · 2026</span><span>Сделано с вниманием к деталям ✳</span></footer>
 </body>
 </html>
