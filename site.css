@@ -61,4 +61,44 @@
 @media(max-width:680px){.process-scroll{height:auto;margin-bottom:95px}.build-cinema{height:520px}.build-controls{gap:7px;margin-top:10px}.build-step{min-height:64px;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:10px 12px;border-radius:13px}.build-step>span{font-size:8px}.build-step strong{font-size:13px}.build-step i{display:none}.process-scroll .scroll-cue{font-size:8px}.build-cinema .build-browser{width:92%}}
 @media(prefers-reduced-motion:reduce){.build-cinema .build-browser,.build-cinema .build-ui-copy b,.build-cinema .build-ui-copy i,.build-cinema .build-ui-copy small,.build-cinema .build-ui-visual,.build-cinema .build-ui-cta,.build-cinema .cinema-progress i,.build-step{transition:none}.build-scanline{display:none}}
 .process-scroll{scroll-margin-top:100px}.page-approach .next-page{bottom:calc(10px + env(safe-area-inset-bottom))}.page-approach .next-page>a{min-width:155px;min-height:55px;gap:10px;padding:6px 7px 6px 15px}.page-approach .next-page-copy{font-size:0}.page-approach .next-page-copy strong{font-size:14px}.page-approach .next-page>a>span:last-child{width:39px;height:39px;font-size:22px}
+
+/* One continuous light route, with a real play state and touch-friendly stages. */
+.signal-cinema{height:550px;background:radial-gradient(ellipse at 49% 38%,#294a2640,transparent 43%),linear-gradient(145deg,#101d11,#0a120d 75%)}
+.signal-art{position:absolute;inset:64px 3.5% 150px;overflow:hidden}
+.signal-art::before{content:"";position:absolute;inset:0;background:linear-gradient(#c7ff4f0b 1px,transparent 1px),linear-gradient(90deg,#c7ff4f0b 1px,transparent 1px);background-size:38px 38px;mask-image:radial-gradient(ellipse,#000 20%,transparent 78%)}
+.signal-glow{position:absolute;top:5%;left:29%;width:45%;height:75%;background:#baff4c1b;filter:blur(78px);border-radius:50%;pointer-events:none}
+.signal-map{position:relative;width:100%;height:100%;overflow:visible}
+.signal-guide{fill:none;stroke:#a2cb7c45;stroke-width:2;stroke-dasharray:2 11;stroke-linecap:round}
+.signal-drawn{fill:none;stroke:url(#signal-gradient);stroke-linecap:round;stroke-linejoin:round}
+.signal-drawn-glow{stroke-width:20;opacity:.35;filter:blur(11px)}
+.signal-drawn-sharp{stroke-width:4;filter:drop-shadow(0 0 8px #c7ff4f9a)}
+.signal-node .node-halo{fill:#c7ff4f08;stroke:#c7ff4f3b;stroke-width:1;opacity:.65}
+.signal-node .node-ring{fill:#0e1a0e;stroke:#abc890;stroke-width:2;transition:fill .4s,stroke .4s,filter .4s}
+.signal-node .node-dot{fill:#a7c69b;transition:fill .4s}
+.signal-node.is-lit .node-ring{fill:#baff4c24;stroke:#d7ffa1;filter:drop-shadow(0 0 12px #c7ff4f)}
+.signal-node.is-lit .node-dot{fill:#ecffc7}
+.signal-node.is-lit .node-halo{animation:signal-pulse 2.6s ease-in-out infinite}
+.traveller-haze{fill:#c7ff4f69;filter:blur(11px)}
+.traveller-ring{fill:#d3ff8140;stroke:#e7ffc2;stroke-width:1.3}
+.traveller-core{fill:url(#signal-core);filter:drop-shadow(0 0 9px #c7ff4f)}
+.signal-caption{position:absolute;color:#a9c398;font:500 10px var(--mono);letter-spacing:.1em}
+.caption-one{left:5%;top:77%}.caption-two{left:47%;top:6%}.caption-three{right:4%;top:18%}
+.signal-cinema .cinema-scenes{top:auto;bottom:64px;left:5%;right:5%;height:128px}
+.signal-cinema .cinema-scene strong{font-size:clamp(45px,5.4vw,76px)}
+.signal-cinema .cinema-bottom{bottom:24px}
+.signal-cinema .cinema-progress{width:36%}
+.signal-gate{position:absolute;z-index:8;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;padding:25px;text-align:center;background:radial-gradient(ellipse at center,#102113de,#09120bef 72%);backdrop-filter:blur(16px)}
+.signal-gate[hidden]{display:none}
+.signal-gate>span{color:var(--lime);font:500 10px var(--mono);letter-spacing:.2em}
+.signal-gate h3{max-width:680px;margin:0 0 12px;font-size:clamp(40px,5.4vw,75px);line-height:1.06;letter-spacing:-.07em}
+.signal-gate h3 em{color:var(--lime);font-family:Georgia,serif;font-weight:400}
+.signal-start{display:flex;align-items:center;justify-content:space-between;gap:28px;min-width:300px;min-height:78px;padding:11px 11px 11px 27px;border:1px solid #ebffcf;border-radius:100px;background:var(--lime);color:#102008;font:800 16px var(--font);cursor:pointer;box-shadow:0 0 0 9px #c7ff4f13,0 13px 55px #baff4c42;transition:transform .25s,box-shadow .25s}
+.signal-start:hover,.signal-start:focus-visible{transform:translateY(-4px);box-shadow:0 0 0 14px #c7ff4f1e,0 19px 65px #baff4c66}
+.signal-start span{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:#11220c;color:var(--lime);font-size:29px}
+.signal-replay{display:block;margin:18px auto 0;padding:12px 22px;border:1px solid #baff4c86;border-radius:100px;background:#122213;color:var(--lime);font:700 13px var(--font);cursor:pointer}
+.signal-replay[hidden]{display:none}
+.signal-replay:hover{background:#243f22}
+@keyframes signal-pulse{50%{opacity:.25;transform:scale(1.6)}}
+@media(max-width:680px){.signal-cinema{height:510px}.signal-art{inset:70px 3% 165px}.signal-map{width:100%}.signal-caption{font-size:7px}.caption-one{left:7%;top:81%}.caption-two{left:46%;top:1%}.caption-three{right:5%;top:13%}.signal-cinema .cinema-scenes{left:21px;right:21px;bottom:61px;height:113px}.signal-cinema .cinema-scene strong{font-size:clamp(35px,9vw,48px)}.signal-gate h3{font-size:clamp(34px,9vw,55px)}.signal-start{min-width:min(100%,285px);min-height:69px;font-size:14px}.signal-start span{width:47px;height:47px}}
+@media(prefers-reduced-motion:reduce){.signal-node.is-lit .node-halo{animation:none}.signal-start,.signal-node *{transition:none}}
 @media(max-width:680px){.page-approach .next-page{right:9px;bottom:calc(7px + env(safe-area-inset-bottom))}.page-approach .next-page>a{min-width:125px;min-height:48px}.page-approach .next-page-copy strong{font-size:12px}.page-approach .next-page>a>span:last-child{width:34px;height:34px;font-size:20px}}

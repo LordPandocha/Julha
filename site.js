@@ -61,14 +61,36 @@ try {
   }
 } catch (_) { /* navigation still works without storage */ }
 
-// Directly controlled build sequence: buttons, swipe and wheel, with native page scroll intact.
+// Light signal follows one SVG route; drawing and stage copy share the same timeline.
 const cinema = document.getElementById('process-cinema');
 if (cinema) {
   const scenes = [...cinema.querySelectorAll('.cinema-scene')];
   const counter = document.getElementById('cinema-counter');
   const progressBar = cinema.querySelector('.cinema-progress i');
   const controls = [...document.querySelectorAll('[data-build-step]')];
-  let stage = 0, startX = 0, lastWheel = 0;
+  const route = document.getElementById('signal-path');
+  const strokes = [...cinema.querySelectorAll('.signal-drawn')];
+  const traveller = document.getElementById('signal-traveller');
+  const nodes = [...cinema.querySelectorAll('.signal-node')];
+  const gate = cinema.querySelector('.signal-gate');
+  const start = cinema.querySelector('.signal-start');
+  const replay = document.querySelector('.signal-replay');
+  const status = document.getElementById('signal-status');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const length = route.getTotalLength();
+  cinema.querySelector('.signal-map').setAttribute('preserveAspectRatio', 'none');
+  const stops = [0, .66, 1];
+  const duration = 9300;
+  let stage = 0, frame = 0, startedAt = 0, currentProgress = 0, playing = false;
+  strokes.forEach(path => { path.style.strokeDasharray = `${length} ${length}`; });
+  function render(progress) {
+    currentProgress = Math.max(0, Math.min(1, progress));
+    const point = route.getPointAtLength(length * currentProgress);
+    traveller.setAttribute('transform', `translate(${point.x} ${point.y})`);
+    strokes.forEach(path => { path.style.strokeDashoffset = String(length * (1 - currentProgress)); });
+    progressBar.style.transform = `scaleX(${currentProgress})`;
+    nodes.forEach((node, index) => node.classList.toggle('is-lit', currentProgress >= stops[index] - .015));
+  }
   function setStage(next) {
     stage = Math.max(0, Math.min(2, next));
     cinema.dataset.stage = String(stage);
@@ -79,30 +101,41 @@ if (cinema) {
       button.setAttribute('aria-pressed', String(active));
     });
     counter.textContent = `0${stage + 1} — 03`;
-    progressBar.style.transform = `scaleX(${(stage + 1) / 3})`;
+    status.textContent = ['НАХОДИМ ГЛАВНОЕ', 'СОБИРАЕМ ОБРАЗ', 'САЙТ ГОТОВ К ЗАПУСКУ'][stage];
   }
+  function stop() { cancelAnimationFrame(frame); playing = false; }
+  function finish() { stop(); setStage(2); render(1); replay.hidden = false; }
+  function tick(now) {
+    if (!playing) return;
+    if (document.hidden) { startedAt += now - (tick.lastTime || now); tick.lastTime = now; frame = requestAnimationFrame(tick); return; }
+    tick.lastTime = now;
+    const progress = Math.min(1, (now - startedAt) / duration);
+    render(progress);
+    if (progress >= .72) setStage(2);
+    else if (progress >= .39) setStage(1);
+    else setStage(0);
+    if (progress < 1) frame = requestAnimationFrame(tick);
+    else finish();
+  }
+  function play() {
+    stop(); gate.hidden = true; cinema.classList.add('has-started'); replay.hidden = true;
+    setStage(0); render(0);
+    if (reduced.matches) { finish(); return; }
+    tick.lastTime = 0; startedAt = performance.now(); playing = true; frame = requestAnimationFrame(tick);
+  }
+  start.addEventListener('click', play);
+  replay.addEventListener('click', play);
   controls.forEach((button, index) => {
-    button.addEventListener('click', () => setStage(index));
+    button.addEventListener('click', () => { stop(); gate.hidden = true; cinema.classList.add('has-started'); replay.hidden = false; setStage(index); render(stops[index]); });
     button.addEventListener('keydown', event => {
       if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
       event.preventDefault();
       const next = (index + (event.key === 'ArrowRight' ? 1 : 2)) % 3;
       controls[next].focus();
-      setStage(next);
+      controls[next].click();
     });
   });
-  cinema.addEventListener('pointerdown', event => { startX = event.clientX; });
-  cinema.addEventListener('pointerup', event => {
-    const distance = event.clientX - startX;
-    if (Math.abs(distance) > 45) setStage(stage + (distance < 0 ? 1 : -1));
-  });
-  cinema.addEventListener('wheel', event => {
-    const now = performance.now();
-    if (Math.abs(event.deltaY) < 18 || now - lastWheel < 650) return;
-    lastWheel = now;
-    setStage(stage + (event.deltaY > 0 ? 1 : -1));
-  }, { passive: true });
-  setStage(0);
+  render(0); setStage(0);
 }
 
 // Touch gets scroll-triggered feedback where desktop uses hover.
