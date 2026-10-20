@@ -80,6 +80,26 @@ if (cinema) {
   const length = route.getTotalLength();
   cinema.querySelector('.signal-map').setAttribute('preserveAspectRatio', 'none');
   const stops = [0, .66, 1];
+  const svgNs = 'http://www.w3.org/2000/svg';
+  const miniNodes = [.11, .23, .35, .47, .58, .75, .84, .93].map(at => {
+    const point = route.getPointAtLength(length * at);
+    const group = document.createElementNS(svgNs, 'g');
+    group.setAttribute('class', 'signal-mini-node');
+    group.setAttribute('transform', `translate(${point.x} ${point.y})`);
+    const halo = document.createElementNS(svgNs, 'circle');
+    halo.setAttribute('r', '11');
+    halo.setAttribute('class', 'mini-halo');
+    const dot = document.createElementNS(svgNs, 'circle');
+    dot.setAttribute('r', '4');
+    dot.setAttribute('class', 'mini-dot');
+    group.append(halo, dot);
+    traveller.before(group);
+    return { group, at };
+  });
+  nodes.forEach((node, index) => {
+    const point = route.getPointAtLength(length * stops[index]);
+    node.setAttribute('transform', `translate(${point.x} ${point.y})`);
+  });
   const duration = 12000;
   let stage = 0, frame = 0, startedAt = 0, currentProgress = 0, playing = false;
   strokes.forEach(path => { path.style.strokeDasharray = `${length} ${length}`; });
@@ -94,6 +114,7 @@ if (cinema) {
     strokes.forEach(path => { path.style.strokeDashoffset = String(length * (1 - currentProgress)); });
     progressBar.style.transform = `scaleX(${currentProgress})`;
     nodes.forEach((node, index) => node.classList.toggle('is-lit', currentProgress >= stops[index] - .015));
+    miniNodes.forEach(({ group, at }) => group.classList.toggle('is-lit', currentProgress >= at));
   }
   function setStage(next) {
     stage = Math.max(0, Math.min(2, next));
