@@ -61,75 +61,48 @@ try {
   }
 } catch (_) { /* navigation still works without storage */ }
 
-// The chosen scene is driven by scroll: particles assemble a site, then reveal it.
+// Directly controlled build sequence: buttons, swipe and wheel, with native page scroll intact.
 const cinema = document.getElementById('process-cinema');
-const processScroll = document.getElementById('process-scroll');
-const particleCanvas = document.getElementById('build-particles');
-if (cinema && processScroll && particleCanvas) {
-  const context = particleCanvas.getContext('2d');
+if (cinema) {
   const scenes = [...cinema.querySelectorAll('.cinema-scene')];
   const counter = document.getElementById('cinema-counter');
   const progressBar = cinema.querySelector('.cinema-progress i');
-  const clamp = value => Math.max(0, Math.min(1, value));
-  const smooth = value => { const t = clamp(value); return t * t * (3 - 2 * t); };
-  const random = seed => { const x = Math.sin(seed * 127.1 + 78.233) * 43758.5453; return x - Math.floor(x); };
-  let width = 1, height = 1, pending = 0, activeScene = -1;
-  function resizeParticles() {
-    const bounds = particleCanvas.getBoundingClientRect();
-    width = Math.max(1, bounds.width); height = Math.max(1, bounds.height);
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    particleCanvas.width = Math.round(width * ratio);
-    particleCanvas.height = Math.round(height * ratio);
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    updateScene();
+  const controls = [...document.querySelectorAll('[data-build-step]')];
+  let stage = 0, startX = 0, lastWheel = 0;
+  function setStage(next) {
+    stage = Math.max(0, Math.min(2, next));
+    cinema.dataset.stage = String(stage);
+    scenes.forEach((scene, index) => scene.classList.toggle('is-current', index === stage));
+    controls.forEach((button, index) => {
+      const active = index === stage;
+      button.classList.toggle('is-current', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    counter.textContent = `0${stage + 1} — 03`;
+    progressBar.style.transform = `scaleX(${(stage + 1) / 3})`;
   }
-  function drawParticles(progress) {
-    context.clearRect(0, 0, width, height);
-    const assembly = smooth((progress - .05) / .42);
-    const fade = 1 - smooth((progress - .7) / .26);
-    context.globalAlpha = Math.max(.06, fade);
-    for (let index = 0; index < 290; index++) {
-      const group = index % 5;
-      const targetX = group === 0 ? width * (.1 + random(index + 3) * .32) : group === 1 ? width * (.1 + random(index + 3) * .39) : group === 2 ? width * (.1 + random(index + 3) * .22) : width * (.59 + random(index + 3) * .31);
-      const targetY = group === 0 ? height * (.23 + random(index + 7) * .06) : group === 1 ? height * (.39 + random(index + 7) * .08) : group === 2 ? height * (.69 + random(index + 7) * .055) : height * (.2 + random(index + 7) * .54);
-      const scatterX = width * (.06 + random(index + 31) * .88);
-      const scatterY = height * (.08 + random(index + 67) * .84);
-      const drift = (1 - assembly) * Math.sin(progress * 9 + index) * 7;
-      const x = scatterX + (targetX - scatterX) * assembly + drift;
-      const y = scatterY + (targetY - scatterY) * assembly;
-      const size = (index % 9 === 0 ? 3.5 : 1.8) + assembly * .4;
-      context.fillStyle = index % 6 === 0 ? '#f1ffe0' : '#c7ff4f';
-      context.fillRect(x, y, size, size);
-    }
-    context.globalAlpha = 1;
-  }
-  function updateScene() {
-    if (document.hidden) return;
-    const rect = processScroll.getBoundingClientRect();
-    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-    const travel = Math.max(1, rect.height - window.innerHeight);
-    const progress = lowMotion() ? 1 : clamp(-rect.top / travel);
-    const stage = progress < .32 ? 0 : progress < .68 ? 1 : 2;
-    cinema.style.setProperty('--build-progress', progress.toFixed(3));
-    cinema.style.setProperty('--site-opacity', smooth((progress - .57) / .33).toFixed(3));
-    cinema.style.setProperty('--particle-opacity', (1 - smooth((progress - .76) / .22)).toFixed(3));
-    progressBar.style.transform = `scaleX(${progress})`;
-    if (stage !== activeScene) {
-      activeScene = stage;
-      cinema.dataset.stage = String(stage);
-      scenes.forEach((scene, index) => scene.classList.toggle('is-current', index === stage));
-      counter.textContent = `0${stage + 1} — 03`;
-    }
-    drawParticles(progress);
-  }
-  function scheduleUpdate() {
-    if (pending) return;
-    pending = requestAnimationFrame(() => { pending = 0; updateScene(); });
-  }
-  window.addEventListener('scroll', scheduleUpdate, { passive: true });
-  window.addEventListener('resize', resizeParticles);
-  document.addEventListener('visibilitychange', scheduleUpdate);
-  resizeParticles();
+  controls.forEach((button, index) => {
+    button.addEventListener('click', () => setStage(index));
+    button.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      const next = (index + (event.key === 'ArrowRight' ? 1 : 2)) % 3;
+      controls[next].focus();
+      setStage(next);
+    });
+  });
+  cinema.addEventListener('pointerdown', event => { startX = event.clientX; });
+  cinema.addEventListener('pointerup', event => {
+    const distance = event.clientX - startX;
+    if (Math.abs(distance) > 45) setStage(stage + (distance < 0 ? 1 : -1));
+  });
+  cinema.addEventListener('wheel', event => {
+    const now = performance.now();
+    if (Math.abs(event.deltaY) < 18 || now - lastWheel < 650) return;
+    lastWheel = now;
+    setStage(stage + (event.deltaY > 0 ? 1 : -1));
+  }, { passive: true });
+  setStage(0);
 }
 
 // Touch gets scroll-triggered feedback where desktop uses hover.
