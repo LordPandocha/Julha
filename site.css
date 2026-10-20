@@ -110,3 +110,36 @@
 @media(max-width:680px){.signal-node circle,.signal-mini-node circle,.traveller-haze{transform:scaleX(2.3);transform-box:fill-box;transform-origin:center}.plane-shape{transform:scaleX(1.5);transform-box:fill-box;transform-origin:center}}
 @media(prefers-reduced-motion:reduce){.signal-node.is-lit .node-halo{animation:none}.signal-start,.signal-node *{transition:none}}
 @media(max-width:680px){.page-approach .next-page{right:9px;bottom:calc(7px + env(safe-area-inset-bottom))}.page-approach .next-page>a{min-width:125px;min-height:48px}.page-approach .next-page-copy strong{font-size:12px}.page-approach .next-page>a>span:last-child{width:34px;height:34px;font-size:20px}}
+
+/* Nine precise route markers and the holographic reveal at milestones 03/06/09. */
+.signal-map{z-index:2}
+.signal-node .point-number,.signal-mini-node .point-number{fill:#a9c98e;font:700 12px var(--mono);letter-spacing:.05em;text-anchor:middle;paint-order:stroke;stroke:#0d190f;stroke-width:3px}
+.signal-node .point-number{fill:var(--lime);font-size:14px}
+.signal-cinema .cinema-prelude{position:absolute;inset:0;display:flex;flex-direction:column;gap:5px;opacity:0;visibility:hidden;transform:translateY(20px) scale(.97);transition:opacity .55s,transform .65s cubic-bezier(.16,1,.3,1),visibility .55s}
+.signal-cinema .cinema-prelude.is-current{opacity:1;visibility:visible;transform:none}
+.signal-cinema .cinema-prelude>span{color:var(--lime);font:500 11px var(--mono);letter-spacing:.15em}
+.signal-cinema .cinema-prelude strong{font-size:clamp(45px,5.4vw,76px);line-height:1;letter-spacing:-.08em}
+.signal-cinema .cinema-prelude strong em{font-family:Georgia,serif;font-weight:400;color:var(--lime)}
+.signal-cinema .cinema-prelude p{color:#d3e0cd;font-size:15px;margin:3px 0 0}
+.holo-burst{position:absolute;z-index:1;width:1px;height:1px;pointer-events:none}
+.holo-burst i{position:absolute;inset:-28px;border:1px solid #c7ff4f;box-shadow:0 0 20px #baff4c88,inset 0 0 20px #baff4c55;border-radius:50%;opacity:0}
+.holo-burst.is-active i{animation:holo-burst 1.6s cubic-bezier(.16,1,.3,1) both}
+.holo-burst.is-active i:nth-child(2){animation-delay:.13s}
+.holo-burst.is-active i:nth-child(3){animation-delay:.28s}
+@keyframes holo-burst{0%{opacity:.85;transform:scale(.15)}65%{opacity:.65}100%{opacity:0;transform:scale(4.4)}}
+.holo-projection{position:absolute;z-index:1;right:9%;top:28%;width:min(28%,300px);height:172px;overflow:hidden;border:1px solid #b9ff83a0;border-radius:15px;background:linear-gradient(150deg,#1b392a95,#10241ad9 60%,#0f2d24a8);box-shadow:0 0 0 1px #e6ffdb24,inset 0 1px #eaffd46b,0 0 50px #baff4c2c,0 22px 55px #0008;opacity:0;transform:perspective(700px) rotateY(-20deg) rotateX(12deg) translateY(30px) scale(.8);transform-origin:bottom center;transition:opacity .8s,transform 1s cubic-bezier(.16,1,.3,1),box-shadow .8s;pointer-events:none}
+.signal-cinema[data-stage="1"] .holo-projection,.signal-cinema[data-stage="2"] .holo-projection{opacity:.72;transform:perspective(700px) rotateY(-12deg) rotateX(7deg) translateY(0) scale(1)}
+.signal-cinema[data-stage="2"] .holo-projection{opacity:1;transform:perspective(700px) rotateY(-5deg) rotateX(2deg) translate(-12px,-18px) scale(1.13);box-shadow:0 0 0 1px #e6ffdb6b,inset 0 1px #eaffd4a0,0 0 100px #baff4c7a,0 30px 85px #0009}
+.holo-projection::before{content:"";position:absolute;z-index:3;inset:-100% -35%;width:32%;background:linear-gradient(90deg,transparent,#d8ffb44a,transparent);transform:rotate(22deg) translateX(-350%);animation:holo-scan 4.5s linear infinite}
+.holo-projection::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 5px,#d4ff9a12 6px 7px);pointer-events:none}
+.holo-top,.holo-foot{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;color:#c9ecbd;font:700 9px var(--mono);letter-spacing:.07em}
+.holo-top{border-bottom:1px solid #baff4c4c}.holo-top span:last-child{color:var(--lime)}
+.holo-preview{display:grid;grid-template-columns:1fr .8fr;gap:18px;align-items:center;padding:17px 18px 8px}
+.holo-copy{display:flex;flex-direction:column;gap:8px}.holo-copy i,.holo-copy b,.holo-copy small{display:block;border-radius:5px;background:#d9ffcaa8}.holo-copy i{width:34%;height:5px;background:var(--lime)}.holo-copy b{width:92%;height:12px}.holo-copy b:nth-of-type(2){width:67%}.holo-copy small{width:48%;height:5px;background:#a2c8948a}
+.holo-visual{position:relative;height:68px;border:1px solid #c7ff4f9c;border-radius:9px;background:radial-gradient(circle at 65% 40%,#baff4c75,#224b3299 55%,#102717);overflow:hidden}
+.holo-visual span{position:absolute;border:1px solid #eaffc4a8;border-radius:50%}.holo-visual span:nth-child(1){width:62px;height:62px;left:-20px;top:19px}.holo-visual span:nth-child(2){width:38px;height:38px;right:-8px;top:-10px}.holo-visual span:nth-child(3){width:7px;height:7px;left:45%;top:42%;background:var(--lime);box-shadow:0 0 13px var(--lime)}
+.holo-foot{padding-top:2px;color:#9dc993;font-size:8px}.holo-foot i{width:50px;height:3px;border-radius:5px;background:var(--lime);box-shadow:0 0 10px var(--lime)}
+@keyframes holo-scan{to{transform:rotate(22deg) translateX(750%)}}
+.page-hidden .holo-projection::before,.signal-cinema.is-offscreen .holo-projection::before{animation-play-state:paused}
+@media(max-width:680px){.signal-cinema .cinema-prelude strong{font-size:clamp(35px,9vw,48px)}.signal-cinema .cinema-prelude p{font-size:12px}.signal-node .point-number,.signal-mini-node .point-number{transform:scaleX(2.3);transform-box:fill-box;transform-origin:center}.holo-projection{right:7%;top:36%;width:42%;height:106px;border-radius:9px}.signal-cinema[data-stage="2"] .holo-projection{transform:perspective(700px) rotateY(-5deg) translate(-2px,-8px) scale(1.06)}.holo-top,.holo-foot{padding:5px 7px;font-size:5px}.holo-preview{gap:6px;padding:8px 9px 3px}.holo-copy{gap:5px}.holo-copy i{height:3px}.holo-copy b{height:6px}.holo-copy small{height:3px}.holo-visual{height:39px}.holo-foot i{width:25px}.holo-burst i{inset:-17px}}
+@media(prefers-reduced-motion:reduce){.holo-burst.is-active i,.holo-projection::before{animation:none}}

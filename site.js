@@ -72,6 +72,8 @@ if (cinema) {
   const strokes = [...cinema.querySelectorAll('.signal-drawn')];
   const traveller = document.getElementById('signal-traveller');
   const nodes = [...cinema.querySelectorAll('.signal-node')];
+  const prelude = cinema.querySelector('.cinema-prelude');
+  const burst = cinema.querySelector('.holo-burst');
   const gate = cinema.querySelector('.signal-gate');
   const start = cinema.querySelector('.signal-start');
   const replay = document.querySelector('.signal-replay');
@@ -79,9 +81,10 @@ if (cinema) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const length = route.getTotalLength();
   cinema.querySelector('.signal-map').setAttribute('preserveAspectRatio', 'none');
-  const stops = [0, .66, 1];
+  const stops = [.25, .625, 1]; // 3rd, 6th and 9th of nine evenly spaced route markers
   const svgNs = 'http://www.w3.org/2000/svg';
-  const miniNodes = [.11, .23, .35, .47, .58, .75, .84, .93].map(at => {
+  const miniNodes = [0, .125, .375, .5, .75, .875].map(at => {
+    const number = Math.round(at * 8) + 1;
     const point = route.getPointAtLength(length * at);
     const group = document.createElementNS(svgNs, 'g');
     group.setAttribute('class', 'signal-mini-node');
@@ -92,16 +95,34 @@ if (cinema) {
     const dot = document.createElementNS(svgNs, 'circle');
     dot.setAttribute('r', '4');
     dot.setAttribute('class', 'mini-dot');
-    group.append(halo, dot);
+    const label = document.createElementNS(svgNs, 'text');
+    label.setAttribute('class', 'point-number');
+    label.setAttribute('x', '0');
+    label.setAttribute('y', '-19');
+    label.textContent = String(number).padStart(2, '0');
+    group.append(halo, dot, label);
     traveller.before(group);
     return { group, at };
   });
   nodes.forEach((node, index) => {
     const point = route.getPointAtLength(length * stops[index]);
     node.setAttribute('transform', `translate(${point.x} ${point.y})`);
+    const label = document.createElementNS(svgNs, 'text');
+    label.setAttribute('class', 'point-number');
+    label.setAttribute('x', '0');
+    label.setAttribute('y', '-34');
+    label.textContent = String(Math.round(stops[index] * 8) + 1).padStart(2, '0');
+    node.append(label);
   });
-  const duration = 12000;
-  let stage = 0, frame = 0, startedAt = 0, currentProgress = 0, playing = false;
+  const timeline = [{ time: 0, at: 0 }, { time: 3200, at: .25 }, { time: 7800, at: .625 }, { time: 11000, at: .875 }, { time: 14800, at: 1 }];
+  let stage = -2, frame = 0, elapsed = 0, lastTick = 0, currentProgress = 0, playing = false, visible = true;
+  if ('IntersectionObserver' in window) {
+    const visibility = new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+      cinema.classList.toggle('is-offscreen', !visible);
+    }, { threshold: 0.05 });
+    visibility.observe(cinema);
+  }
   strokes.forEach(path => { path.style.strokeDasharray = `${length} ${length}`; });
   function render(progress) {
     currentProgress = Math.max(0, Math.min(1, progress));
@@ -113,40 +134,63 @@ if (cinema) {
     traveller.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
     strokes.forEach(path => { path.style.strokeDashoffset = String(length * (1 - currentProgress)); });
     progressBar.style.transform = `scaleX(${currentProgress})`;
+    counter.textContent = `${String(Math.min(9, Math.floor(currentProgress * 8 + .0001) + 1)).padStart(2, '0')} — 09`;
     nodes.forEach((node, index) => node.classList.toggle('is-lit', currentProgress >= stops[index] - .015));
     miniNodes.forEach(({ group, at }) => group.classList.toggle('is-lit', currentProgress >= at));
   }
   function setStage(next) {
+    if (stage === next) return;
     stage = Math.max(0, Math.min(2, next));
-    cinema.dataset.stage = String(stage);
+    if (next < 0) stage = -1;
+    cinema.dataset.stage = stage < 0 ? 'intro' : String(stage);
+    prelude.classList.toggle('is-current', stage < 0);
     scenes.forEach((scene, index) => scene.classList.toggle('is-current', index === stage));
     controls.forEach((button, index) => {
       const active = index === stage;
       button.classList.toggle('is-current', active);
       button.setAttribute('aria-pressed', String(active));
     });
-    counter.textContent = `0${stage + 1} — 03`;
-    status.textContent = ['НАХОДИМ ГЛАВНОЕ', 'СОБИРАЕМ ОБРАЗ', 'САЙТ ГОТОВ К ЗАПУСКУ'][stage];
+    status.textContent = stage < 0 ? 'МАРШРУТ ЗАПУЩЕН' : ['НАХОДИМ ГЛАВНОЕ', 'СОБИРАЕМ ОБРАЗ', 'САЙТ ГОТОВ К ЗАПУСКУ'][stage];
+    if (stage >= 0) {
+      const point = route.getPointAtLength(length * stops[stage]);
+      burst.style.left = `${point.x / 10}%`;
+      burst.style.top = `${point.y / 3.1}%`;
+      burst.classList.remove('is-active');
+      void burst.offsetWidth;
+      burst.classList.add('is-active');
+    }
   }
   function stop() { cancelAnimationFrame(frame); playing = false; }
   function finish() { stop(); setStage(2); render(1); replay.hidden = false; }
+  function progressAt(time) {
+    for (let index = 1; index < timeline.length; index++) {
+      const end = timeline[index];
+      if (time > end.time) continue;
+      const start = timeline[index - 1];
+      let t = Math.max(0, (time - start.time) / (end.time - start.time));
+      if (index === timeline.length - 1) t = t * t * (3 - 2 * t);
+      return start.at + (end.at - start.at) * t;
+    }
+    return 1;
+  }
   function tick(now) {
     if (!playing) return;
-    if (document.hidden) { startedAt += now - (tick.lastTime || now); tick.lastTime = now; frame = requestAnimationFrame(tick); return; }
-    tick.lastTime = now;
-    const progress = Math.min(1, (now - startedAt) / duration);
+    elapsed += document.hidden || !visible ? 0 : Math.min(80, now - lastTick);
+    lastTick = now;
+    const progress = progressAt(elapsed);
     render(progress);
     if (progress >= stops[2]) setStage(2);
     else if (progress >= stops[1]) setStage(1);
-    else setStage(0);
-    if (progress < 1) frame = requestAnimationFrame(tick);
+    else if (progress >= stops[0]) setStage(0);
+    else setStage(-1);
+    if (elapsed < timeline[timeline.length - 1].time) frame = requestAnimationFrame(tick);
     else finish();
   }
   function play() {
     stop(); gate.hidden = true; cinema.classList.add('has-started'); replay.hidden = true;
-    setStage(0); render(0);
+    setStage(-1); render(0);
     if (reduced.matches) { finish(); return; }
-    tick.lastTime = 0; startedAt = performance.now(); playing = true; frame = requestAnimationFrame(tick);
+    elapsed = 0; lastTick = performance.now(); playing = true; frame = requestAnimationFrame(tick);
   }
   start.addEventListener('click', play);
   replay.addEventListener('click', play);
@@ -160,7 +204,7 @@ if (cinema) {
       controls[next].click();
     });
   });
-  render(0); setStage(0);
+  render(0); setStage(-1);
 }
 
 // Touch gets scroll-triggered feedback where desktop uses hover.
