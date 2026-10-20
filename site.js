@@ -80,13 +80,17 @@ if (cinema) {
   const length = route.getTotalLength();
   cinema.querySelector('.signal-map').setAttribute('preserveAspectRatio', 'none');
   const stops = [0, .66, 1];
-  const duration = 9300;
+  const duration = 12000;
   let stage = 0, frame = 0, startedAt = 0, currentProgress = 0, playing = false;
   strokes.forEach(path => { path.style.strokeDasharray = `${length} ${length}`; });
   function render(progress) {
     currentProgress = Math.max(0, Math.min(1, progress));
-    const point = route.getPointAtLength(length * currentProgress);
-    traveller.setAttribute('transform', `translate(${point.x} ${point.y})`);
+    const distance = length * currentProgress;
+    const point = route.getPointAtLength(distance);
+    const before = route.getPointAtLength(Math.max(0, distance - 3));
+    const after = route.getPointAtLength(Math.min(length, distance + 3));
+    const angle = Math.atan2(after.y - before.y, after.x - before.x) * 180 / Math.PI;
+    traveller.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
     strokes.forEach(path => { path.style.strokeDashoffset = String(length * (1 - currentProgress)); });
     progressBar.style.transform = `scaleX(${currentProgress})`;
     nodes.forEach((node, index) => node.classList.toggle('is-lit', currentProgress >= stops[index] - .015));
@@ -111,8 +115,8 @@ if (cinema) {
     tick.lastTime = now;
     const progress = Math.min(1, (now - startedAt) / duration);
     render(progress);
-    if (progress >= .72) setStage(2);
-    else if (progress >= .39) setStage(1);
+    if (progress >= stops[2]) setStage(2);
+    else if (progress >= stops[1]) setStage(1);
     else setStage(0);
     if (progress < 1) frame = requestAnimationFrame(tick);
     else finish();
