@@ -37,27 +37,28 @@ try {
   }
 } catch (_) { /* navigation still works without storage */ }
 
-// The cinematic route starts once when visible and can be replayed.
+// The route starts by choice, then pauses when it leaves the viewport.
 const cinema = document.getElementById('process-cinema');
-const replay = document.getElementById('process-play');
-if (cinema && replay) {
+const startButton = document.getElementById('process-play');
+const replay = document.getElementById('process-replay');
+if (cinema && startButton && replay) {
   const path = document.getElementById('cinema-line');
   const plane = document.getElementById('cinema-plane');
   const scenes = [...cinema.querySelectorAll('.cinema-scene')];
   const counter = document.getElementById('cinema-counter');
   const progressBar = cinema.querySelector('.cinema-progress i');
   const length = path.getTotalLength();
-  let started = false, playing = false, visible = false, frame = 0, elapsed = 0, last = 0, activeScene = -1;
+  let playing = false, visible = true, frame = 0, elapsed = 0, last = 0, activeScene = -1;
   path.style.strokeDasharray = String(length);
   function render(progress) {
     const at = Math.max(0, Math.min(1, progress));
     path.style.strokeDashoffset = String(length * (1 - at));
     const point = path.getPointAtLength(length * at);
-    const near = path.getPointAtLength(Math.min(length, length * at + 2));
+    const near = path.getPointAtLength(Math.min(length, length * at + 5));
     const angle = Math.atan2(near.y - point.y, near.x - point.x) * 180 / Math.PI;
-    plane.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle}) scale(${touchMode.matches ? 2.4 : 1.4})`);
+    plane.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle}) scale(${touchMode.matches ? 2.15 : 1.6})`);
     progressBar.style.transform = `scaleX(${at})`;
-    const stage = at >= 1 ? 2 : Math.min(2, Math.floor(at * 3));
+    const stage = at >= 1 ? 2 : at < .34 ? 0 : at < .69 ? 1 : 2;
     if (stage !== activeScene) {
       activeScene = stage;
       scenes.forEach((scene, index) => scene.classList.toggle('is-current', index === stage));
@@ -69,32 +70,32 @@ if (cinema && replay) {
     if (!playing || !visible || document.hidden) { frame = 0; last = 0; return; }
     if (last) elapsed += Math.min(now - last, 50);
     last = now;
-    const duration = touchMode.matches ? 4200 : 3600;
+    const duration = touchMode.matches ? 10400 : 9800;
     const t = Math.min(1, elapsed / duration);
     render(t * t * (3 - 2 * t));
     if (t < 1) frame = requestAnimationFrame(tick);
-    else { playing = false; frame = 0; }
+    else { playing = false; frame = 0; replay.hidden = false; }
   }
   function play() {
-    started = true;
     cancelAnimationFrame(frame);
     elapsed = 0; last = 0; activeScene = -1;
     cinema.classList.add('has-started');
-    if (lowMotion()) { playing = false; render(1); return; }
+    replay.hidden = true;
+    if (lowMotion()) { playing = false; render(1); replay.hidden = false; return; }
     playing = true;
     render(0);
     if (visible && !document.hidden) frame = requestAnimationFrame(tick);
   }
+  startButton.addEventListener('click', play);
   replay.addEventListener('click', play);
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting;
-      if (visible && !started) play();
-      else if (visible && playing && !frame && !document.hidden) frame = requestAnimationFrame(tick);
+      if (visible && playing && !frame && !document.hidden) frame = requestAnimationFrame(tick);
       else if (!visible && frame) { cancelAnimationFrame(frame); frame = 0; last = 0; }
-    }, { threshold: touchMode.matches ? 0.35 : 0.5 });
+    }, { threshold: 0.08 });
     observer.observe(cinema);
-  } else { visible = true; play(); }
+  }
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && frame) { cancelAnimationFrame(frame); frame = 0; last = 0; }
     else if (!document.hidden && visible && playing && !frame) frame = requestAnimationFrame(tick);
@@ -103,14 +104,14 @@ if (cinema && replay) {
 
 // Touch gets scroll-triggered feedback where desktop uses hover.
 if (touchMode.matches && 'IntersectionObserver' in window) {
-  const targets = document.querySelectorAll('.work-card,.home-preview a,.why-list article');
+  const targets = document.querySelectorAll('.work-card,.why-list article');
   const observer = new IntersectionObserver((entries, self) => {
     entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); self.unobserve(entry.target); } });
   }, { threshold: 0.22 });
   targets.forEach(target => observer.observe(target));
 }
 
-const decorative = document.querySelectorAll('.home-art,.brand-star,.about-visual>span,.approach-manifesto>b,.contact-orbit');
+const decorative = document.querySelectorAll('.home-art,.brand-star,.about-frame,.approach-manifesto>b,.contact-orbit');
 const setHidden = () => document.documentElement.classList.toggle('page-hidden', document.hidden);
 document.addEventListener('visibilitychange', setHidden);
 setHidden();
