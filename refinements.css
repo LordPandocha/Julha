@@ -11,6 +11,23 @@
 .case-body h3,.process-results h3{margin:0 0 10px;font-size:19px}
 .case-body p,.process-results p{margin:0;color:#bdcab9;line-height:1.75;max-width:58ch}
 .case-body>a{align-self:end;justify-self:start}
+.work-copy .case-detail{margin-top:24px;border-radius:18px;width:100%}
+.work-copy .case-detail summary{padding:18px;min-height:56px;gap:12px}
+.work-copy .case-detail summary strong{font-size:16px;letter-spacing:0}
+.work-copy .case-body{grid-template-columns:1fr;padding:0 18px 24px;gap:22px}
+.work-copy .case-body p{font-size:15px;letter-spacing:0;line-height:1.7}
+.work-copy,.work-links,.process-head>div,.page-intro{min-width:0}
+.work-links{flex-wrap:wrap}
+.page-intro h1,.process-head h2{overflow-wrap:normal;word-break:normal;letter-spacing:-.055em}
+.process-head{gap:24px;align-items:end}
+.process-head h2{font-size:clamp(38px,5.4vw,76px);line-height:1.12}
+.process-head h2 em{display:inline-block}
+.page-intro p{max-width:44ch;line-height:1.6;text-wrap:pretty}
+.floating-contact{position:fixed;right:24px;bottom:24px;z-index:90;display:flex;align-items:center;gap:12px;padding:16px 22px;min-height:56px;border:1px solid #dcffa4;border-radius:999px;background:#c7ff4f;color:#102006;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 8px 36px #0008}
+.floating-contact img{display:block}
+.floating-contact:hover{background:#e1ff9e}
+.site-footer{padding-bottom:110px}
+@media(max-width:680px){.floating-contact{right:16px;bottom:max(16px,env(safe-area-inset-bottom));padding:14px 18px}.process-head{flex-direction:column;align-items:start}.process-head h2{font-size:clamp(34px,9vw,52px)}.work-copy h2{font-size:clamp(30px,8vw,48px)}.case-detail summary strong{min-width:0;line-height:1.5}.page-intro h1{font-size:clamp(42px,11vw,70px)}}
 .process-results ol{list-style:none;counter-reset:step;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0}
 .process-results li{counter-increment:step;padding:26px;border:1px solid #aacd7044;border-radius:22px;background:#111a13}
 .process-results li::before{content:"0" counter(step);display:block;color:var(--lime);font:12px var(--mono);margin-bottom:28px}
