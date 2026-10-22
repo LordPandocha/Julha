@@ -63,7 +63,7 @@ try {
 
 // Light signal follows one SVG route; drawing and stage copy share the same timeline.
 const cinema = document.getElementById('process-cinema');
-if (cinema) {
+if (cinema && !document.querySelector('script[data-anime-motion]')) {
   const scenes = [...cinema.querySelectorAll('.cinema-scene')];
   const counter = document.getElementById('cinema-counter');
   const progressBar = cinema.querySelector('.cinema-progress i');

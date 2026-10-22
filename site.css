@@ -143,3 +143,5 @@
 .page-hidden .holo-projection::before,.signal-cinema.is-offscreen .holo-projection::before{animation-play-state:paused}
 @media(max-width:680px){.signal-cinema .cinema-prelude strong{font-size:clamp(35px,9vw,48px)}.signal-cinema .cinema-prelude p{font-size:12px}.signal-node .point-number,.signal-mini-node .point-number{transform:scaleX(2.3);transform-box:fill-box;transform-origin:center}.holo-projection{right:7%;top:36%;width:42%;height:106px;border-radius:9px}.signal-cinema[data-stage="2"] .holo-projection{transform:perspective(700px) rotateY(-5deg) translate(-2px,-8px) scale(1.06)}.holo-top,.holo-foot{padding:5px 7px;font-size:5px}.holo-preview{gap:6px;padding:8px 9px 3px}.holo-copy{gap:5px}.holo-copy i{height:3px}.holo-copy b{height:6px}.holo-copy small{height:3px}.holo-visual{height:39px}.holo-foot i{width:25px}.holo-burst i{inset:-17px}}
 @media(prefers-reduced-motion:reduce){.holo-burst.is-active i,.holo-projection::before{animation:none}}
+.page-approach:not(.anime-ready) .signal-gate{display:none}
+.page-approach:not(.anime-ready) .cinema-prelude{opacity:1;visibility:visible;transform:none}
